@@ -2,13 +2,16 @@ const dialogflow = require('dialogflow');
 const uuid = require('uuid');
 const express = require('express');
 const bodyParser = require('body-parser');
-var app = express();
+const app = express();
 var port = process.env.PORT ||8080
 app.use(express.static(__dirname + "/public"));
 app.get("/", function(req,res){
     res.render("index");
 })
 
+app.listen(port, function(){
+    console.log("app.running"+port);
+})
 const sessionId = uuid.v4();
 app.use(bodyParser.urlencoded({
     extended:false
@@ -26,7 +29,7 @@ app.use(function (req, res, next) {
 });
 
 
-app.post('https://fast-atoll-84457.herokuapp.com/',(req,res)=>{
+app.post('/',(req,res)=>{
 
    runSample(req.body.MSG).then(data=>{
        res.send({Reply:data})
@@ -36,13 +39,13 @@ app.post('https://fast-atoll-84457.herokuapp.com/',(req,res)=>{
  * Send a query to the dialogflow agent, and return the query result.
  * @param {string} projectId The project to be used
  */
-async function runSample(msg,projectId = 'nairobi-mtlbnp') {
+async function runSample(msg,projectId = 'your project id') {
   // A unique identifier for the given session
   
 
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient({
-      keyFilename:"hosting/Nairobi-edcfd08eadbd.json"
+      keyFilename:"<credentials.json>"//relativepath
   });
   const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
@@ -73,7 +76,6 @@ async function runSample(msg,projectId = 'nairobi-mtlbnp') {
   return result.fulfillmentText;
 }
 
-app.listen(port, function(){
-  console.log("app.running" +port);
-})
+
+
 
