@@ -36,7 +36,7 @@ document.getElementById("MSG").value= no.innerHTML;
 $(window).load(function() {
   $messages.mCustomScrollbar();
   setTimeout(function() {
-    serverMessage("Hey! I am Neurobee");
+    serverMessage("Hey I am Neurobee");
   }, 100);
 
 });
@@ -89,7 +89,7 @@ function serverMessage(response2) {
 
 function fetchmsg(){
 
-     var url = 'https://fast-atoll-84457.herokuapp.com/';
+     var url = '/';
       
       const data = new URLSearchParams();
       for (const pair of new FormData(document.getElementById("mymsg"))) {
